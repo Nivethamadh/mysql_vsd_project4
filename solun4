@@ -1,0 +1,82 @@
+-- work by mysql--
+
+-- To create database--
+create database quiz;
+use quiz;
+-- To create table--
+create table questions(
+id int(11) auto_increment,
+ques1 varchar(55),
+option_1 varchar(55),
+option_2 varchar(55),
+option_3 varchar(55),
+option_4 varchar(55),
+ans int(20),
+primary key(id)
+);
+
+
+-- To insert the values in the table--
+INSERT INTO quiz.questions (ques1,option_1,option_2, option_3, option_4, ans) VALUES
+('What is the capital of France?', 'Paris', 'London', 'Berlin', 'Madrid', 1),
+('Which planet is known as the Red Planet?', 'Venus', 'Jupiter', 'Mars', 'Saturn', 3),
+('Who painted the Mona Lisa?', 'Leonardo da Vinci', 'Pablo Picasso', 'Vincent van Gogh', 'Michelangelo', 1),
+('What is the largest ocean on Earth?', 'Atlantic Ocean', 'Arctic Ocean', 'Indian Ocean', 'Pacific Ocean', 4),
+('What is the chemical symbol for gold?', 'Au', 'Ag', 'Cu', 'Fe', 1);
+select*from questions;
+
+--work by vsd code--
+#work by vsd code
+
+# import the connector with mysql
+import mysql.connector
+
+# add the mysql connector detais
+mydb=mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="root",
+    database="quiz"
+)
+
+mycursor=mydb.cursor()
+
+#create the main function to display the questions
+def display_questions(mycursor):
+    query=("select*from questions")
+    mycursor.execute(query)
+    questions = mycursor.fetchall()
+    for question in questions:
+        print("Question:", question[1])
+        print("Options:")
+        print("1. ", question[2])
+        print("2. ", question[3])
+        print("3. ", question[4])
+        print("4. ", question[5])
+        print()
+        
+
+#create the another main function to display the answer score
+def take_quiz(mycursor):
+    
+    query=("select*from questions")
+    mycursor.execute(query)
+    questions=mycursor.fetchall()
+    score=0
+    for question in questions:
+        print("Question:", question[1])
+        print("Options:")
+        print("1. ", question[2])
+        print("2. ", question[3])
+        print("3. ", question[4])
+        print("4. ", question[5])
+        user_answer=int(input())
+        if user_answer==question[6]:
+            score+=1
+    return score
+# call off the display values in main function
+print("Questions:")
+display_questions(mycursor)
+print("Answers:")
+final_score = take_quiz(mycursor)
+print("Your final score is:",final_score)
